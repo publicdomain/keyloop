@@ -38,6 +38,8 @@ namespace KeyLoop
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.alwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.minimizeOnLoopStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.rememberSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.freeReleasesPublicDomainWeeklycomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.originalThreadDonationCodercomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,10 +58,8 @@ namespace KeyLoop
 			this.delayComboBox = new System.Windows.Forms.ComboBox();
 			this.pressesNumericUpDown = new System.Windows.Forms.NumericUpDown();
 			this.refreshButton = new System.Windows.Forms.Button();
-			this.targetListBox = new System.Windows.Forms.ListBox();
 			this.targetLabel = new System.Windows.Forms.Label();
-			this.minimizeOnLoopStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.rememberSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.targetListView = new System.Windows.Forms.ListView();
 			this.mainMenuStrip.SuspendLayout();
 			this.mainStatusStrip.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -133,6 +133,20 @@ namespace KeyLoop
 			this.alwaysOnTopToolStripMenuItem.Name = "alwaysOnTopToolStripMenuItem";
 			this.alwaysOnTopToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
 			this.alwaysOnTopToolStripMenuItem.Text = "&Always on top";
+			// 
+			// minimizeOnLoopStartToolStripMenuItem
+			// 
+			this.minimizeOnLoopStartToolStripMenuItem.Name = "minimizeOnLoopStartToolStripMenuItem";
+			this.minimizeOnLoopStartToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+			this.minimizeOnLoopStartToolStripMenuItem.Text = "&Minimize on loop start";
+			// 
+			// rememberSettingsToolStripMenuItem
+			// 
+			this.rememberSettingsToolStripMenuItem.Checked = true;
+			this.rememberSettingsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.rememberSettingsToolStripMenuItem.Name = "rememberSettingsToolStripMenuItem";
+			this.rememberSettingsToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+			this.rememberSettingsToolStripMenuItem.Text = "&Remember settings";
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -218,8 +232,8 @@ namespace KeyLoop
 			this.tableLayoutPanel1.Controls.Add(this.delayComboBox, 1, 5);
 			this.tableLayoutPanel1.Controls.Add(this.pressesNumericUpDown, 1, 4);
 			this.tableLayoutPanel1.Controls.Add(this.refreshButton, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.targetListBox, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.targetLabel, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.targetListView, 0, 1);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -362,17 +376,6 @@ namespace KeyLoop
 			this.refreshButton.UseVisualStyleBackColor = true;
 			this.refreshButton.Click += new System.EventHandler(this.OnRefreshButtonClick);
 			// 
-			// targetListBox
-			// 
-			this.tableLayoutPanel1.SetColumnSpan(this.targetListBox, 2);
-			this.targetListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.targetListBox.FormattingEnabled = true;
-			this.targetListBox.IntegralHeight = false;
-			this.targetListBox.Location = new System.Drawing.Point(3, 38);
-			this.targetListBox.Name = "targetListBox";
-			this.targetListBox.Size = new System.Drawing.Size(248, 128);
-			this.targetListBox.TabIndex = 1;
-			// 
 			// targetLabel
 			// 
 			this.tableLayoutPanel1.SetColumnSpan(this.targetLabel, 2);
@@ -385,19 +388,17 @@ namespace KeyLoop
 			this.targetLabel.Text = "&Target:";
 			this.targetLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// minimizeOnLoopStartToolStripMenuItem
+			// targetListView
 			// 
-			this.minimizeOnLoopStartToolStripMenuItem.Name = "minimizeOnLoopStartToolStripMenuItem";
-			this.minimizeOnLoopStartToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-			this.minimizeOnLoopStartToolStripMenuItem.Text = "&Minimize on loop start";
-			// 
-			// rememberSettingsToolStripMenuItem
-			// 
-			this.rememberSettingsToolStripMenuItem.Checked = true;
-			this.rememberSettingsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.rememberSettingsToolStripMenuItem.Name = "rememberSettingsToolStripMenuItem";
-			this.rememberSettingsToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-			this.rememberSettingsToolStripMenuItem.Text = "&Remember settings";
+			this.tableLayoutPanel1.SetColumnSpan(this.targetListView, 2);
+			this.targetListView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.targetListView.Location = new System.Drawing.Point(3, 38);
+			this.targetListView.MultiSelect = false;
+			this.targetListView.Name = "targetListView";
+			this.targetListView.Size = new System.Drawing.Size(248, 128);
+			this.targetListView.TabIndex = 10;
+			this.targetListView.UseCompatibleStateImageBehavior = false;
+			this.targetListView.View = System.Windows.Forms.View.List;
 			// 
 			// MainForm
 			// 
@@ -421,10 +422,10 @@ namespace KeyLoop
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ListView targetListView;
 		private System.Windows.Forms.ToolStripMenuItem rememberSettingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem minimizeOnLoopStartToolStripMenuItem;
 		private System.Windows.Forms.Label targetLabel;
-		private System.Windows.Forms.ListBox targetListBox;
 		private System.Windows.Forms.Button refreshButton;
 		private System.Windows.Forms.NumericUpDown pressesNumericUpDown;
 		private System.Windows.Forms.ComboBox delayComboBox;

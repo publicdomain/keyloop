@@ -9,13 +9,33 @@ namespace KeyLoop
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Runtime.InteropServices;
+    using System.Text;
     using System.Windows.Forms;
+
 
     /// <summary>
     /// Description of MainForm.
     /// </summary>
     public partial class MainForm : Form
     {
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowText", ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpWindowText, int nMaxCount);
+
+        [DllImport("user32.dll", EntryPoint = "EnumDesktopWindows", ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern bool EnumDesktopWindows(IntPtr hDesktop, EnumDelegate lpEnumCallbackFunction, IntPtr lParam);
+
+        private delegate bool EnumDelegate(IntPtr hWnd, int lParam);
+
+        /// <summary>
+        /// The target window dictionary.
+        /// </summary>
+        private Dictionary<IntPtr, string> targetWindowDictionary = new Dictionary<IntPtr, string>();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="T:KeyLoop.MainForm"/> class.
         /// </summary>
@@ -23,6 +43,51 @@ namespace KeyLoop
         {
             // The InitializeComponent() call is required for Windows Forms designer support.
             this.InitializeComponent();
+
+            // Populate list
+            this.PopulateTargetWindowList();
+        }
+
+        /// <summary>
+        /// Populates the target window list.
+        /// </summary>
+        private void PopulateTargetWindowList()
+        {
+            if (EnumDesktopWindows(IntPtr.Zero, EnumDesktopWindowsCallback, IntPtr.Zero))
+            {
+                foreach (var window in targetWindowDictionary)
+                {
+                    var listVIewItem = new ListViewItem()
+                    {
+                        Text = window.Value,
+                        Tag = window.Key
+                    };
+
+                    this.targetListView.Items.Add(listVIewItem);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Enums the desktop windows callback.
+        /// </summary>
+        /// <returns><c>true</c>, if desktop windows callback was enumed, <c>false</c> otherwise.</returns>
+        /// <param name="hWnd">H window.</param>
+        /// <param name="lParam">L parameter.</param>
+        private bool EnumDesktopWindowsCallback(IntPtr hWnd, int lParam)
+        {
+            StringBuilder titleStringBuilder = new StringBuilder(1024);
+
+            GetWindowText(hWnd, titleStringBuilder, titleStringBuilder.Capacity + 1);
+
+            string windowTitle = titleStringBuilder.ToString();
+
+            if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(windowTitle) == false)
+            {
+                targetWindowDictionary.Add(hWnd, windowTitle);
+            }
+
+            return true;
         }
 
         /// <summary>
