@@ -49,6 +49,16 @@ namespace KeyLoop
         }
 
         /// <summary>
+        /// Handles the start button click event
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OnStartButtonClick(object sender, EventArgs e)
+        {
+            // TODO Add code
+        }
+
+        /// <summary>
         /// Populates the target window list.
         /// </summary>
         private void PopulateTargetWindowList()
@@ -127,16 +137,6 @@ namespace KeyLoop
         }
 
         /// <summary>
-        /// Handles the exit tool strip menu item click event
-        /// </summary>
-        /// <param name="sender">Sender object.</param>
-        /// <param name="e">Event arguments.</param>
-        private void OnExitToolStripMenuItemClick(object sender, EventArgs e)
-        {
-            // TODO Add code
-        }
-
-        /// <summary>
         /// Handles the free releases public domain weeklycom tool strip menu item click event
         /// </summary>
         /// <param name="sender">Sender object.</param>
@@ -177,16 +177,6 @@ namespace KeyLoop
         }
 
         /// <summary>
-        /// Handles the start button click event
-        /// </summary>
-        /// <param name="sender">Sender object.</param>
-        /// <param name="e">Event arguments.</param>
-        private void OnStartButtonClick(object sender, EventArgs e)
-        {
-            // TODO Add code
-        }
-
-        /// <summary>
         /// /*Handles the refresh button click event*/*
         /// </summary>
         /// <param name="sender">Sender object.</param>
@@ -194,6 +184,17 @@ namespace KeyLoop
         private void OnRefreshButtonClick(object sender, EventArgs e)
         {
             this.PopulateTargetWindowList();
+        }
+
+        /// <summary>
+        /// Handles the exit tool strip menu item click event
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OnExitToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            // Close program
+            this.Close();
         }
     }
 }
