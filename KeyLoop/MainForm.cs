@@ -53,10 +53,19 @@ namespace KeyLoop
         /// </summary>
         private void PopulateTargetWindowList()
         {
+            // Begin updating
+            this.targetListView.BeginUpdate();
+
+            // Reset 
+            this.targetWindowDictionary.Clear();
+            this.targetListView.Items.Clear();
+
+            // Add windows
             if (EnumDesktopWindows(IntPtr.Zero, EnumDesktopWindowsCallback, IntPtr.Zero))
             {
                 foreach (var window in targetWindowDictionary)
                 {
+                    // Add 
                     var listVIewItem = new ListViewItem()
                     {
                         Text = window.Value,
@@ -66,6 +75,12 @@ namespace KeyLoop
                     this.targetListView.Items.Add(listVIewItem);
                 }
             }
+
+            // Adjust column width 
+            this.targetListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+            // End updating
+            this.targetListView.EndUpdate();
         }
 
         /// <summary>
@@ -82,7 +97,8 @@ namespace KeyLoop
 
             string windowTitle = titleStringBuilder.ToString();
 
-            if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(windowTitle) == false)
+            // TODO Visible, with text and not self [May be good to handle the start and manager additions]
+            if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(windowTitle) == false && hWnd != this.Handle)
             {
                 targetWindowDictionary.Add(hWnd, windowTitle);
             }
@@ -177,7 +193,7 @@ namespace KeyLoop
         /// <param name="e">Event arguments.</param>
         private void OnRefreshButtonClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            this.PopulateTargetWindowList();
         }
     }
 }

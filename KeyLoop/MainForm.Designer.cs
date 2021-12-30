@@ -60,6 +60,7 @@ namespace KeyLoop
 			this.refreshButton = new System.Windows.Forms.Button();
 			this.targetLabel = new System.Windows.Forms.Label();
 			this.targetListView = new System.Windows.Forms.ListView();
+			this.windowColumnHeader = new System.Windows.Forms.ColumnHeader();
 			this.mainMenuStrip.SuspendLayout();
 			this.mainStatusStrip.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
@@ -390,6 +391,8 @@ namespace KeyLoop
 			// 
 			// targetListView
 			// 
+			this.targetListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+									this.windowColumnHeader});
 			this.tableLayoutPanel1.SetColumnSpan(this.targetListView, 2);
 			this.targetListView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.targetListView.Location = new System.Drawing.Point(3, 38);
@@ -398,7 +401,12 @@ namespace KeyLoop
 			this.targetListView.Size = new System.Drawing.Size(248, 128);
 			this.targetListView.TabIndex = 10;
 			this.targetListView.UseCompatibleStateImageBehavior = false;
-			this.targetListView.View = System.Windows.Forms.View.List;
+			this.targetListView.View = System.Windows.Forms.View.Details;
+			// 
+			// windowColumnHeader
+			// 
+			this.windowColumnHeader.Text = "Title";
+			this.windowColumnHeader.Width = 100;
 			// 
 			// MainForm
 			// 
@@ -422,6 +430,7 @@ namespace KeyLoop
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ColumnHeader windowColumnHeader;
 		private System.Windows.Forms.ListView targetListView;
 		private System.Windows.Forms.ToolStripMenuItem rememberSettingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem minimizeOnLoopStartToolStripMenuItem;
