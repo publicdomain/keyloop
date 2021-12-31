@@ -12,7 +12,7 @@ namespace KeyLoop
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Windows.Forms;
-
+    using PInvoke;
 
     /// <summary>
     /// Description of MainForm.
@@ -43,6 +43,12 @@ namespace KeyLoop
         {
             // The InitializeComponent() call is required for Windows Forms designer support.
             this.InitializeComponent();
+
+            // Populate keys
+            foreach (var item in Enum.GetNames(typeof(User32.VirtualKey)))
+            {
+                this.keyComboBox.Items.Add(item.Substring(3));
+            }
 
             // Populate list
             this.PopulateTargetWindowList();
@@ -123,7 +129,14 @@ namespace KeyLoop
         /// <param name="e">Event arguments.</param>
         private void OnOptionsToolStripMenuItemDropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            // TODO Add code
+            // Set clicked item
+            var clickedItem = (ToolStripMenuItem)e.ClickedItem;
+
+            // Toggle checked
+            clickedItem.Checked = !clickedItem.Checked;
+
+            // Set topmost
+            this.TopMost = this.alwaysOnTopToolStripMenuItem.Checked;
         }
 
         /// <summary>
@@ -137,17 +150,17 @@ namespace KeyLoop
         }
 
         /// <summary>
-        /// Handles the free releases public domain weeklycom tool strip menu item click event
+        /// Handles the Free Releases @ PublicDomain.is tool strip menu item click event
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
-        private void OnFreeReleasesPublicDomainWeeklycomToolStripMenuItemClick(object sender, EventArgs e)
+        private void OnFreeReleasesPublicDomainisToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code	
+            // TODO Add code
         }
 
         /// <summary>
-        /// Handles the original thread donation codercom tool strip menu item click event
+        /// Handles the Original Thread @ DonationCoder.com tool strip menu item click event
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>

@@ -41,7 +41,7 @@ namespace KeyLoop
 			this.minimizeOnLoopStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.rememberSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.freeReleasesPublicDomainWeeklycomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.freeReleasesPublicDomainisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.originalThreadDonationCodercomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.sourceCodeGithubcomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -152,7 +152,7 @@ namespace KeyLoop
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.freeReleasesPublicDomainWeeklycomToolStripMenuItem,
+									this.freeReleasesPublicDomainisToolStripMenuItem,
 									this.originalThreadDonationCodercomToolStripMenuItem,
 									this.sourceCodeGithubcomToolStripMenuItem,
 									this.toolStripSeparator2,
@@ -161,12 +161,12 @@ namespace KeyLoop
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.helpToolStripMenuItem.Text = "&Help";
 			// 
-			// freeReleasesPublicDomainWeeklycomToolStripMenuItem
+			// freeReleasesPublicDomainisToolStripMenuItem
 			// 
-			this.freeReleasesPublicDomainWeeklycomToolStripMenuItem.Name = "freeReleasesPublicDomainWeeklycomToolStripMenuItem";
-			this.freeReleasesPublicDomainWeeklycomToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
-			this.freeReleasesPublicDomainWeeklycomToolStripMenuItem.Text = "&Free Releases @ PublicDomain.is";
-			this.freeReleasesPublicDomainWeeklycomToolStripMenuItem.Click += new System.EventHandler(this.OnFreeReleasesPublicDomainWeeklycomToolStripMenuItemClick);
+			this.freeReleasesPublicDomainisToolStripMenuItem.Name = "freeReleasesPublicDomainisToolStripMenuItem";
+			this.freeReleasesPublicDomainisToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+			this.freeReleasesPublicDomainisToolStripMenuItem.Text = "&Free Releases @ PublicDomain.is";
+			this.freeReleasesPublicDomainisToolStripMenuItem.Click += new System.EventHandler(this.OnFreeReleasesPublicDomainisToolStripMenuItemClick);
 			// 
 			// originalThreadDonationCodercomToolStripMenuItem
 			// 
@@ -451,7 +451,7 @@ namespace KeyLoop
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem sourceCodeGithubcomToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem originalThreadDonationCodercomToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem freeReleasesPublicDomainWeeklycomToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem freeReleasesPublicDomainisToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem alwaysOnTopToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
