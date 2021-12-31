@@ -79,6 +79,25 @@ namespace KeyLoop
 
             // Populate list
             this.PopulateTargetWindowList();
+
+            /* Settings data */
+
+            // Check for settings file
+            if (!File.Exists(this.settingsDataPath))
+            {
+                // Create new settings file
+                this.SaveSettingsFile(this.settingsDataPath, new SettingsData());
+            }
+
+            // Load settings from disk
+            this.settingsData = this.LoadSettingsFile(this.settingsDataPath);
+
+            // Set options
+            this.alwaysOnTopToolStripMenuItem.Checked = this.settingsData.AlwaysOnTop;
+            this.minimizeOnLoopStartToolStripMenuItem.Checked = this.settingsData.MinimizeOnLoopStart;
+
+            // Set topmost
+            this.TopMost = this.settingsData.AlwaysOnTop;
         }
 
         /// <summary>
