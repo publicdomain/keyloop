@@ -174,13 +174,14 @@ namespace KeyLoop
         }
 
         /// <summary>
-        /// Handles the source code githubcom tool strip menu item click event
+        /// Handles the source code @ GitHub.com tool strip menu item click event
         /// </summary>
         /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
         private void OnSourceCodeGithubcomToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Open GitHub repository
+            Process.Start("https://github.com/publicdomain/keyloop");
         }
 
         /// <summary>

@@ -298,6 +298,7 @@ namespace KeyLoop
 			// keyComboBox
 			// 
 			this.keyComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.keyComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.keyComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.keyComboBox.FormattingEnabled = true;
 			this.keyComboBox.Location = new System.Drawing.Point(130, 207);
