@@ -8,11 +8,13 @@ namespace KeyLoop
     // Directives
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Windows.Forms;
     using PInvoke;
+    using PublicDomain;
 
     /// <summary>
     /// Description of MainForm.
@@ -61,7 +63,7 @@ namespace KeyLoop
         /// <param name="e">Event arguments.</param>
         private void OnStartButtonClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // todo add code
         }
 
         /// <summary>
@@ -156,7 +158,8 @@ namespace KeyLoop
         /// <param name="e">Event arguments.</param>
         private void OnFreeReleasesPublicDomainisToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Open our website
+            Process.Start("https://publicdomain.is");
         }
 
         /// <summary>
@@ -186,7 +189,7 @@ namespace KeyLoop
         /// <param name="e">Event arguments.</param>
         private void OnAboutToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code	
+            // TODO Add code    
         }
 
         /// <summary>
