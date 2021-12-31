@@ -92,9 +92,12 @@ namespace KeyLoop
             // Load settings from disk
             this.settingsData = this.LoadSettingsFile(this.settingsDataPath);
 
-            // Set options
+            // Set GUI
             this.alwaysOnTopToolStripMenuItem.Checked = this.settingsData.AlwaysOnTop;
             this.minimizeOnLoopStartToolStripMenuItem.Checked = this.settingsData.MinimizeOnLoopStart;
+            this.keyComboBox.Text = this.settingsData.Key;
+            this.pressesNumericUpDown.Value = this.settingsData.Presses;
+            this.delayComboBox.Text = this.settingsData.Delay;
 
             // Set topmost
             this.TopMost = this.settingsData.AlwaysOnTop;
@@ -312,7 +315,17 @@ namespace KeyLoop
         /// <param name="e">Event arguments.</param>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
-            // TODO Add code
+            /* Setiings data */
+
+            // Save options
+            this.settingsData.AlwaysOnTop = this.alwaysOnTopToolStripMenuItem.Checked;
+            this.settingsData.MinimizeOnLoopStart = this.minimizeOnLoopStartToolStripMenuItem.Checked;
+            this.settingsData.Key = this.keyComboBox.Text;
+            this.settingsData.Presses = this.pressesNumericUpDown.Value;
+            this.settingsData.Delay = this.delayComboBox.Text;
+
+            // Save settings data to disk
+            this.SaveSettingsFile(this.settingsDataPath, this.settingsData);
         }
 
         /// <summary>

@@ -33,5 +33,23 @@ namespace PublicDomain
         /// </summary>
         /// <value><c>true</c> if minimize on loop start; otherwise, <c>false</c>.</value>
         public bool MinimizeOnLoopStart { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets the key.
+        /// </summary>
+        /// <value>The key.</value>
+        public string Key { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the presses.
+        /// </summary>
+        /// <value>The presses.</value>
+        public decimal Presses { get; set; } = 1;
+
+        /// <summary>
+        /// TODO Gets or sets the delay. [Can be made an integer, for int.TryParse()]
+        /// </summary>
+        /// <value>The delay.</value>
+        public string Delay { get; set; } = "1000";
     }
 }
