@@ -10,6 +10,7 @@ namespace KeyLoop
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Drawing;
+    using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Windows.Forms;
@@ -39,12 +40,34 @@ namespace KeyLoop
         private Dictionary<IntPtr, string> targetWindowDictionary = new Dictionary<IntPtr, string>();
 
         /// <summary>
+        /// Gets or sets the associated icon.
+        /// </summary>
+        /// <value>The associated icon.</value>
+        private Icon associatedIcon = null;
+
+        /// <summary>
+        /// The settings data.
+        /// </summary>
+        private SettingsData settingsData = null;
+
+        /// <summary>
+        /// The settings data path.
+        /// </summary>
+        private string settingsDataPath = $"{Application.ProductName}-SettingsData.txt";
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:KeyLoop.MainForm"/> class.
         /// </summary>
         public MainForm()
         {
             // The InitializeComponent() call is required for Windows Forms designer support.
             this.InitializeComponent();
+
+            // Set associated icon from exe file
+            this.associatedIcon = Icon.ExtractAssociatedIcon(typeof(MainForm).GetTypeInfo().Assembly.Location);
+
+            // Set public domain weekly tool strip menu item image
+            this.freeReleasesPublicDomainisToolStripMenuItem.Image = this.associatedIcon.ToBitmap();
 
             // Populate keys
             foreach (var item in Enum.GetNames(typeof(User32.VirtualKey)))
@@ -191,7 +214,54 @@ namespace KeyLoop
         /// <param name="e">Event arguments.</param>
         private void OnAboutToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code    
+            // Set license text
+            var licenseText = $"CC0 1.0 Universal (CC0 1.0) - Public Domain Dedication{Environment.NewLine}" +
+                $"https://creativecommons.org/publicdomain/zero/1.0/legalcode{Environment.NewLine}{Environment.NewLine}" +
+                $"Libraries and icons have separate licenses.{Environment.NewLine}{Environment.NewLine}" +
+                $"dotnet-pinvoke by .NET Foundation and Contributors - MIT License{Environment.NewLine}" +
+                $"https://github.com/dotnet/pinvoke{Environment.NewLine}{Environment.NewLine}" +
+                $"Forever-gold icon by OpenClipart-Vectors - Pixabay License{Environment.NewLine}" +
+                $"https://pixabay.com/vectors/forever-gold-infinite-infinity-2028508/{Environment.NewLine}{Environment.NewLine}" +
+                $"Patreon icon used according to published brand guidelines{Environment.NewLine}" +
+                $"https://www.patreon.com/brand{Environment.NewLine}{Environment.NewLine}" +
+                $"GitHub mark icon used according to published logos and usage guidelines{Environment.NewLine}" +
+                $"https://github.com/logos{Environment.NewLine}{Environment.NewLine}" +
+                $"DonationCoder icon used with permission{Environment.NewLine}" +
+                $"https://www.donationcoder.com/forum/index.php?topic=48718{Environment.NewLine}{Environment.NewLine}" +
+                $"PublicDomain icon is based on the following source images:{Environment.NewLine}{Environment.NewLine}" +
+                $"Bitcoin by GDJ - Pixabay License{Environment.NewLine}" +
+                $"https://pixabay.com/vectors/bitcoin-digital-currency-4130319/{Environment.NewLine}{Environment.NewLine}" +
+                $"Letter P by ArtsyBee - Pixabay License{Environment.NewLine}" +
+                $"https://pixabay.com/illustrations/p-glamour-gold-lights-2790632/{Environment.NewLine}{Environment.NewLine}" +
+                $"Letter D by ArtsyBee - Pixabay License{Environment.NewLine}" +
+                $"https://pixabay.com/illustrations/d-glamour-gold-lights-2790573/{Environment.NewLine}{Environment.NewLine}";
+
+            // Prepend sponsors
+            licenseText = $"RELEASE SPONSORS:{Environment.NewLine}{Environment.NewLine}* Jesse Reichler{Environment.NewLine}* Max P.{Environment.NewLine}{Environment.NewLine}=========={Environment.NewLine}{Environment.NewLine}" + licenseText;
+
+            // Set title
+            string programTitle = typeof(MainForm).GetTypeInfo().Assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title;
+
+            // Set version for generating semantic version 
+            Version version = typeof(MainForm).GetTypeInfo().Assembly.GetName().Version;
+
+            // Set about form
+            var aboutForm = new AboutForm(
+                $"About {programTitle}",
+                $"{programTitle} {version.Major}.{version.Minor}.{version.Build}",
+                $"Made for: adamok70{Environment.NewLine}DonationCoder.com{Environment.NewLine}Day #365, Week #52 @ December 31, 2021",
+                licenseText,
+                this.Icon.ToBitmap())
+            {
+                // Set about form icon
+                Icon = this.associatedIcon,
+
+                // Set always on top
+                TopMost = this.TopMost
+            };
+
+            // Show about form
+            aboutForm.ShowDialog();
         }
 
         /// <summary>
@@ -214,5 +284,15 @@ namespace KeyLoop
             // Close program
             this.Close();
         }
+		
+		void OnMainFormLoad(object sender, EventArgs e)
+		{
+			
+		}
+		
+		void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			
+		}
     }
 }

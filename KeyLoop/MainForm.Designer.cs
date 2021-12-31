@@ -39,7 +39,6 @@ namespace KeyLoop
 			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.alwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.minimizeOnLoopStartToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.rememberSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.freeReleasesPublicDomainisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.originalThreadDonationCodercomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,8 +121,7 @@ namespace KeyLoop
 			// 
 			this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.alwaysOnTopToolStripMenuItem,
-									this.minimizeOnLoopStartToolStripMenuItem,
-									this.rememberSettingsToolStripMenuItem});
+									this.minimizeOnLoopStartToolStripMenuItem});
 			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
 			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
 			this.optionsToolStripMenuItem.Text = "&Options";
@@ -140,14 +138,6 @@ namespace KeyLoop
 			this.minimizeOnLoopStartToolStripMenuItem.Name = "minimizeOnLoopStartToolStripMenuItem";
 			this.minimizeOnLoopStartToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
 			this.minimizeOnLoopStartToolStripMenuItem.Text = "&Minimize on loop start";
-			// 
-			// rememberSettingsToolStripMenuItem
-			// 
-			this.rememberSettingsToolStripMenuItem.Checked = true;
-			this.rememberSettingsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.rememberSettingsToolStripMenuItem.Name = "rememberSettingsToolStripMenuItem";
-			this.rememberSettingsToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
-			this.rememberSettingsToolStripMenuItem.Text = "&Remember settings";
 			// 
 			// helpToolStripMenuItem
 			// 
@@ -422,6 +412,8 @@ namespace KeyLoop
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "KeyLoop";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
+			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.mainMenuStrip.ResumeLayout(false);
 			this.mainMenuStrip.PerformLayout();
 			this.mainStatusStrip.ResumeLayout(false);
@@ -433,7 +425,6 @@ namespace KeyLoop
 		}
 		private System.Windows.Forms.ColumnHeader windowColumnHeader;
 		private System.Windows.Forms.ListView targetListView;
-		private System.Windows.Forms.ToolStripMenuItem rememberSettingsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem minimizeOnLoopStartToolStripMenuItem;
 		private System.Windows.Forms.Label targetLabel;
 		private System.Windows.Forms.Button refreshButton;
