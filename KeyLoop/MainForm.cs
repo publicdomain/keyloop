@@ -41,6 +41,16 @@ namespace KeyLoop
 
         private delegate bool EnumDelegate(IntPtr hWnd, int lParam);
 
+        private const int MOD_CONTROL = 0x0002;
+
+        private const int WM_HOTKEY = 0x0312;
+
+        [DllImport("User32")]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
+
+        [DllImport("User32")]
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
         /// <summary>
         /// The target window dictionary.
         /// </summary>
@@ -182,6 +192,9 @@ namespace KeyLoop
 
             // Set topmost
             this.TopMost = this.settingsData.AlwaysOnTop;
+
+            // Register hotkey
+            RegisterHotKey(this.Handle, 1, MOD_CONTROL, Convert.ToInt16(Keys.K));
         }
 
         /// <summary>
@@ -354,6 +367,23 @@ namespace KeyLoop
         }
 
         /// <summary>
+        /// The Windows proc.
+        /// </summary>
+        /// <param name="m">Message.</param>
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_HOTKEY)
+            {
+                // Press button
+                this.startButton.PerformClick();
+            }
+            else
+            {
+                base.WndProc(ref m);
+            }
+        }
+
+        /// <summary>
         /// Handles the options tool strip menu item drop down item clicked event
         /// </summary>
         /// <param name="sender">Sender object.</param>
@@ -377,7 +407,17 @@ namespace KeyLoop
         /// <param name="e">Event arguments.</param>
         private void OnNewToolStripMenuItemClick(object sender, EventArgs e)
         {
-            // TODO Add code
+            // Refresh
+            this.refreshButton.PerformClick();
+
+            // Reset
+            this.keyComboBox.SelectedIndex = -1;
+            this.pressesNumericUpDown.Value = 1;
+            this.intervalComboBox.Text = "1000";
+            this.cycles = 0;
+            this.cycleCountToolStripStatusLabel.Text = "0";
+            this.sendKeyString = string.Empty;
+            this.targetHandle = IntPtr.Zero;
         }
 
         /// <summary>
@@ -497,6 +537,9 @@ namespace KeyLoop
         /// <param name="e">Event arguments.</param>
         private void OnMainFormFormClosing(object sender, FormClosingEventArgs e)
         {
+            // Free hotkey
+            UnregisterHotKey(this.Handle, 1);
+
             /* Setiings data */
 
             // Save options
