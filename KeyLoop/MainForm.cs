@@ -65,7 +65,12 @@ namespace KeyLoop
         /// <summary>
         /// The send key timer.
         /// </summary>
-        private System.Timers.Timer sendKeyTimer = new System.Timers.Timer();
+        private System.Timers.Timer sendKeyTimer = null;
+
+        /// <summary>
+        /// The cycles.
+        /// </summary>
+        private int cycles = 0;
 
         /// <summary>
         /// The send key string.
@@ -153,20 +158,6 @@ namespace KeyLoop
                 this.keyComboBox.Items.Add(key.ToString());
             }
 
-            // Populate with more keys
-            /*foreach (var key in Enum.GetNames(typeof(Keys)))
-            {
-                // Add if one character
-                if (key.Length == 1)
-                {
-                    this.keyComboBox.Items.Add(key);
-                }
-                else if (key.Length == 2 && key.StartsWith("D", StringComparison.InvariantCulture))
-                {
-                    this.keyComboBox.Items.Add(key.Substring(1));
-                }
-            }*/
-
             // Populate list
             this.PopulateTargetWindowList();
 
@@ -201,7 +192,7 @@ namespace KeyLoop
         private void OnStartButtonClick(object sender, EventArgs e)
         {
             // Start/stop
-            if (this.startButton.Text.Contains("Start"))
+            if (this.startButton.Text == "&Start loop")
             {
                 /* Prechecks */
 
@@ -237,18 +228,39 @@ namespace KeyLoop
                     return;
                 }
 
-                /* Start timer */
+                // Change button text
+                this.startButton.Text = "&Stop loop";
 
-                // Try parse interval or set to initial 1000 value
+                /* SendKey timer */
 
-                sendKeyTimer.Elapsed += new ElapsedEventHandler(OnSendKeyTimerElapsed);
-                sendKeyTimer.Interval = Convert.ToUInt32(this.intervalComboBox.Text);
-                sendKeyTimer.Enabled = true;
+                this.sendKeyTimer = new System.Timers.Timer();
+                this.sendKeyTimer.Elapsed += new ElapsedEventHandler(OnSendKeyTimerElapsed);
+
+                // Set interval to parsed or default to a second
+                int parsedInt;
+
+                if (this.intervalComboBox.Text.Length == 0 || !int.TryParse(this.intervalComboBox.Text, out parsedInt))
+                {
+                    this.intervalComboBox.Text = "1000";
+                    this.sendKeyTimer.Interval = 1000;
+                }
+                else
+                {
+                    this.sendKeyTimer.Interval = parsedInt;
+                }
+
+                // Start
+                this.sendKeyTimer.Start();
             }
             else
             {
+                // Reset button text
+                this.startButton.Text = "&Start loop";
+
                 // Stop
-                sendKeyTimer.Enabled = false;
+                this.sendKeyTimer.Stop();
+                this.sendKeyTimer.Dispose();
+                this.sendKeyTimer = null;
             }
         }
 
@@ -274,6 +286,10 @@ namespace KeyLoop
 
             // Send the key
             SendKeys.SendWait(this.sendKeyString);
+
+            // Raise & set cycle count
+            this.cycles++;
+            this.cycleCountToolStripStatusLabel.Text = this.cycles.ToString();
         }
 
         /// <summary>

@@ -49,7 +49,7 @@ namespace KeyLoop
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainStatusStrip = new System.Windows.Forms.StatusStrip();
             this.cyclesToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.cyclerCountToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.cycleCountToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.startButton = new System.Windows.Forms.Button();
             this.keyLabel = new System.Windows.Forms.Label();
@@ -62,6 +62,9 @@ namespace KeyLoop
             this.targetLabel = new System.Windows.Forms.Label();
             this.targetListView = new System.Windows.Forms.ListView();
             this.windowColumnHeader = new System.Windows.Forms.ColumnHeader();
+            this.hotkeyToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.hotkeyCombinationToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainMenuStrip.SuspendLayout();
             this.mainStatusStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -192,7 +195,10 @@ namespace KeyLoop
             // 
             this.mainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
                                     this.cyclesToolStripStatusLabel,
-                                    this.cyclerCountToolStripStatusLabel});
+                                    this.cycleCountToolStripStatusLabel,
+                                    this.toolStripStatusLabel3,
+                                    this.hotkeyToolStripStatusLabel,
+                                    this.hotkeyCombinationToolStripStatusLabel});
             this.mainStatusStrip.Location = new System.Drawing.Point(0, 368);
             this.mainStatusStrip.Name = "mainStatusStrip";
             this.mainStatusStrip.Size = new System.Drawing.Size(254, 22);
@@ -205,12 +211,12 @@ namespace KeyLoop
             this.cyclesToolStripStatusLabel.Size = new System.Drawing.Size(44, 17);
             this.cyclesToolStripStatusLabel.Text = "Cycles:";
             // 
-            // cyclerCountToolStripStatusLabel
+            // cycleCountToolStripStatusLabel
             // 
-            this.cyclerCountToolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.cyclerCountToolStripStatusLabel.Name = "cyclerCountToolStripStatusLabel";
-            this.cyclerCountToolStripStatusLabel.Size = new System.Drawing.Size(14, 17);
-            this.cyclerCountToolStripStatusLabel.Text = "0";
+            this.cycleCountToolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.cycleCountToolStripStatusLabel.Name = "cycleCountToolStripStatusLabel";
+            this.cycleCountToolStripStatusLabel.Size = new System.Drawing.Size(14, 17);
+            this.cycleCountToolStripStatusLabel.Text = "0";
             // 
             // tableLayoutPanel1
             // 
@@ -402,6 +408,25 @@ namespace KeyLoop
             this.windowColumnHeader.Text = "Title";
             this.windowColumnHeader.Width = 100;
             // 
+            // hotkeyToolStripStatusLabel
+            // 
+            this.hotkeyToolStripStatusLabel.Name = "hotkeyToolStripStatusLabel";
+            this.hotkeyToolStripStatusLabel.Size = new System.Drawing.Size(48, 17);
+            this.hotkeyToolStripStatusLabel.Text = "Hotkey:";
+            // 
+            // hotkeyCombinationToolStripStatusLabel
+            // 
+            this.hotkeyCombinationToolStripStatusLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.hotkeyCombinationToolStripStatusLabel.Name = "hotkeyCombinationToolStripStatusLabel";
+            this.hotkeyCombinationToolStripStatusLabel.Size = new System.Drawing.Size(57, 17);
+            this.hotkeyCombinationToolStripStatusLabel.Text = "CTRL + K";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(12, 17);
+            this.toolStripStatusLabel3.Text = "/";
+            // 
             // MainForm
             // 
             this.AcceptButton = this.startButton;
@@ -426,6 +451,9 @@ namespace KeyLoop
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripStatusLabel hotkeyCombinationToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel hotkeyToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ColumnHeader windowColumnHeader;
         private System.Windows.Forms.ListView targetListView;
         private System.Windows.Forms.ToolStripMenuItem minimizeOnLoopStartToolStripMenuItem;
@@ -439,7 +467,7 @@ namespace KeyLoop
         private System.Windows.Forms.Label keyLabel;
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.ToolStripStatusLabel cyclerCountToolStripStatusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel cycleCountToolStripStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel cyclesToolStripStatusLabel;
         private System.Windows.Forms.StatusStrip mainStatusStrip;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
