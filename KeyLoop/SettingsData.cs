@@ -47,9 +47,9 @@ namespace PublicDomain
         public decimal Presses { get; set; } = 1;
 
         /// <summary>
-        /// TODO Gets or sets the delay. [Can be made an integer, for int.TryParse()]
+        /// TODO Gets or sets the interval. [Can be made an integer, for int.TryParse()]
         /// </summary>
-        /// <value>The delay.</value>
-        public string Delay { get; set; } = "1000";
+        /// <value>The interval.</value>
+        public string Interval { get; set; } = "1000";
     }
 }

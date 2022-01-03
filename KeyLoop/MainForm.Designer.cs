@@ -54,9 +54,9 @@ namespace KeyLoop
             this.startButton = new System.Windows.Forms.Button();
             this.keyLabel = new System.Windows.Forms.Label();
             this.pressesLabel = new System.Windows.Forms.Label();
-            this.delayLabel = new System.Windows.Forms.Label();
+            this.intervalLabel = new System.Windows.Forms.Label();
             this.keyComboBox = new System.Windows.Forms.ComboBox();
-            this.delayComboBox = new System.Windows.Forms.ComboBox();
+            this.intervalComboBox = new System.Windows.Forms.ComboBox();
             this.pressesNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.refreshButton = new System.Windows.Forms.Button();
             this.targetLabel = new System.Windows.Forms.Label();
@@ -220,9 +220,9 @@ namespace KeyLoop
             this.tableLayoutPanel1.Controls.Add(this.startButton, 0, 6);
             this.tableLayoutPanel1.Controls.Add(this.keyLabel, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.pressesLabel, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.delayLabel, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.intervalLabel, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.keyComboBox, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.delayComboBox, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.intervalComboBox, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.pressesNumericUpDown, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.refreshButton, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.targetLabel, 0, 0);
@@ -276,16 +276,16 @@ namespace KeyLoop
             this.pressesLabel.Text = "&Presses:";
             this.pressesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // delayLabel
+            // intervalLabel
             // 
-            this.delayLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.delayLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.delayLabel.Location = new System.Drawing.Point(3, 274);
-            this.delayLabel.Name = "delayLabel";
-            this.delayLabel.Size = new System.Drawing.Size(121, 35);
-            this.delayLabel.TabIndex = 7;
-            this.delayLabel.Text = "&Delay (ms):";
-            this.delayLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.intervalLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.intervalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.intervalLabel.Location = new System.Drawing.Point(3, 274);
+            this.intervalLabel.Name = "intervalLabel";
+            this.intervalLabel.Size = new System.Drawing.Size(121, 35);
+            this.intervalLabel.TabIndex = 7;
+            this.intervalLabel.Text = "&Interval (ms):";
+            this.intervalLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // keyComboBox
             // 
@@ -298,12 +298,12 @@ namespace KeyLoop
             this.keyComboBox.Size = new System.Drawing.Size(121, 24);
             this.keyComboBox.TabIndex = 4;
             // 
-            // delayComboBox
+            // intervalComboBox
             // 
-            this.delayComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.delayComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.delayComboBox.FormattingEnabled = true;
-            this.delayComboBox.Items.AddRange(new object[] {
+            this.intervalComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.intervalComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.intervalComboBox.FormattingEnabled = true;
+            this.intervalComboBox.Items.AddRange(new object[] {
                                     "50",
                                     "100",
                                     "150",
@@ -328,10 +328,10 @@ namespace KeyLoop
                                     "8000",
                                     "9000",
                                     "10000"});
-            this.delayComboBox.Location = new System.Drawing.Point(130, 277);
-            this.delayComboBox.Name = "delayComboBox";
-            this.delayComboBox.Size = new System.Drawing.Size(121, 24);
-            this.delayComboBox.TabIndex = 8;
+            this.intervalComboBox.Location = new System.Drawing.Point(130, 277);
+            this.intervalComboBox.Name = "intervalComboBox";
+            this.intervalComboBox.Size = new System.Drawing.Size(121, 24);
+            this.intervalComboBox.TabIndex = 8;
             // 
             // pressesNumericUpDown
             // 
@@ -395,6 +395,7 @@ namespace KeyLoop
             this.targetListView.TabIndex = 10;
             this.targetListView.UseCompatibleStateImageBehavior = false;
             this.targetListView.View = System.Windows.Forms.View.Details;
+            this.targetListView.SelectedIndexChanged += new System.EventHandler(this.OnTargetListViewSelectedIndexChanged);
             // 
             // windowColumnHeader
             // 
@@ -431,9 +432,9 @@ namespace KeyLoop
         private System.Windows.Forms.Label targetLabel;
         private System.Windows.Forms.Button refreshButton;
         private System.Windows.Forms.NumericUpDown pressesNumericUpDown;
-        private System.Windows.Forms.ComboBox delayComboBox;
+        private System.Windows.Forms.ComboBox intervalComboBox;
         private System.Windows.Forms.ComboBox keyComboBox;
-        private System.Windows.Forms.Label delayLabel;
+        private System.Windows.Forms.Label intervalLabel;
         private System.Windows.Forms.Label pressesLabel;
         private System.Windows.Forms.Label keyLabel;
         private System.Windows.Forms.Button startButton;

@@ -11,12 +11,14 @@ namespace KeyLoop
     using System.Diagnostics;
     using System.Drawing;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Text;
+    using System.Threading;
+    using System.Timers;
     using System.Windows.Forms;
     using System.Xml.Serialization;
-    using PInvoke;
     using PublicDomain;
 
     /// <summary>
@@ -33,6 +35,9 @@ namespace KeyLoop
 
         [DllImport("user32.dll", EntryPoint = "EnumDesktopWindows", ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
         private static extern bool EnumDesktopWindows(IntPtr hDesktop, EnumDelegate lpEnumCallbackFunction, IntPtr lParam);
+
+        [DllImport("User32.dll")]
+        private static extern int SetForegroundWindow(IntPtr point);
 
         private delegate bool EnumDelegate(IntPtr hWnd, int lParam);
 
@@ -58,6 +63,26 @@ namespace KeyLoop
         private string settingsDataPath = $"{Application.ProductName}-SettingsData.txt";
 
         /// <summary>
+        /// The send key timer.
+        /// </summary>
+        private System.Timers.Timer sendKeyTimer = new System.Timers.Timer();
+
+        /// <summary>
+        /// The send key string.
+        /// </summary>
+        private string sendKeyString;
+
+        /// <summary>
+        /// The target handle.
+        /// </summary>
+        private IntPtr targetHandle = IntPtr.Zero;
+
+        /// <summary>
+        /// The send key dictionary.
+        /// </summary>
+        private Dictionary<string, string> sendKeyDictionary = new Dictionary<string, string>();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:KeyLoop.MainForm"/> class.
         /// </summary>
         public MainForm()
@@ -71,11 +96,76 @@ namespace KeyLoop
             // Set public domain weekly tool strip menu item image
             this.freeReleasesPublicDomainisToolStripMenuItem.Image = this.associatedIcon.ToBitmap();
 
-            // Populate keys
-            foreach (var item in Enum.GetNames(typeof(User32.VirtualKey)))
+            // Add to keys dictionary
+            sendKeyDictionary.Add("BACKSPACE", "{BACKSPACE}");
+            sendKeyDictionary.Add("BREAK", "{BREAK}");
+            sendKeyDictionary.Add("CAPS LOCK", "{CAPSLOCK}");
+            sendKeyDictionary.Add("DELETE", "{DELETE}");
+            sendKeyDictionary.Add("DOWN ARROW", "{DOWN}");
+            sendKeyDictionary.Add("END", "{END}");
+            sendKeyDictionary.Add("ENTER", "{ENTER}");
+            sendKeyDictionary.Add("ESC", "{ESC}");
+            sendKeyDictionary.Add("HELP", "{HELP}");
+            sendKeyDictionary.Add("HOME", "{HOME}");
+            sendKeyDictionary.Add("INS or INSERT", "{INSERT}");
+            sendKeyDictionary.Add("LEFT ARROW", "{LEFT}");
+            sendKeyDictionary.Add("NUM LOCK", "{NUMLOCK}");
+            sendKeyDictionary.Add("PAGE DOWN", "{PGDN}");
+            sendKeyDictionary.Add("PAGE UP", "{PGUP}");
+            sendKeyDictionary.Add("PRINT SCREEN", "{PRTSC}");
+            sendKeyDictionary.Add("RIGHT ARROW", "{RIGHT}");
+            sendKeyDictionary.Add("SCROLL LOCK", "{SCROLLLOCK}");
+            sendKeyDictionary.Add("TAB", "{TAB}");
+            sendKeyDictionary.Add("UP ARROW", "{UP}");
+            sendKeyDictionary.Add("F1", "{F1}");
+            sendKeyDictionary.Add("F2", "{F2}");
+            sendKeyDictionary.Add("F3", "{F3}");
+            sendKeyDictionary.Add("F4", "{F4}");
+            sendKeyDictionary.Add("F5", "{F5}");
+            sendKeyDictionary.Add("F6", "{F6}");
+            sendKeyDictionary.Add("F7", "{F7}");
+            sendKeyDictionary.Add("F8", "{F8}");
+            sendKeyDictionary.Add("F9", "{F9}");
+            sendKeyDictionary.Add("F10", "{F10}");
+            sendKeyDictionary.Add("F11", "{F11}");
+            sendKeyDictionary.Add("F12", "{F12}");
+            sendKeyDictionary.Add("F13", "{F13}");
+            sendKeyDictionary.Add("F14", "{F14}");
+            sendKeyDictionary.Add("F15", "{F15}");
+            sendKeyDictionary.Add("F16", "{F16}");
+            sendKeyDictionary.Add("Keypad add", "{ADD}");
+            sendKeyDictionary.Add("Keypad subtract", "{SUBTRACT}");
+            sendKeyDictionary.Add("Keypad multiply", "{MULTIPLY}");
+            sendKeyDictionary.Add("Keypad divide", "{DIVIDE}");
+            sendKeyDictionary.Add("SHIFT", "+");
+            sendKeyDictionary.Add("CTRL", "^");
+            sendKeyDictionary.Add("ALT", "%");
+
+            // Add all in dictionary
+            foreach (var key in this.sendKeyDictionary)
             {
-                this.keyComboBox.Items.Add(item.Substring(3));
+                this.keyComboBox.Items.Add(key.Key);
             }
+
+            // Add printable characters
+            foreach (var key in Enumerable.Range(0, 256).Select(i => (char)i).Where(c => !char.IsControl(c)).ToList())
+            {
+                this.keyComboBox.Items.Add(key.ToString());
+            }
+
+            // Populate with more keys
+            /*foreach (var key in Enum.GetNames(typeof(Keys)))
+            {
+                // Add if one character
+                if (key.Length == 1)
+                {
+                    this.keyComboBox.Items.Add(key);
+                }
+                else if (key.Length == 2 && key.StartsWith("D", StringComparison.InvariantCulture))
+                {
+                    this.keyComboBox.Items.Add(key.Substring(1));
+                }
+            }*/
 
             // Populate list
             this.PopulateTargetWindowList();
@@ -97,7 +187,7 @@ namespace KeyLoop
             this.minimizeOnLoopStartToolStripMenuItem.Checked = this.settingsData.MinimizeOnLoopStart;
             this.keyComboBox.Text = this.settingsData.Key;
             this.pressesNumericUpDown.Value = this.settingsData.Presses;
-            this.delayComboBox.Text = this.settingsData.Delay;
+            this.intervalComboBox.Text = this.settingsData.Interval;
 
             // Set topmost
             this.TopMost = this.settingsData.AlwaysOnTop;
@@ -110,7 +200,80 @@ namespace KeyLoop
         /// <param name="e">Event arguments.</param>
         private void OnStartButtonClick(object sender, EventArgs e)
         {
-            // todo add code
+            // Start/stop
+            if (this.startButton.Text.Contains("Start"))
+            {
+                /* Prechecks */
+
+                // Target
+                if (this.targetHandle == IntPtr.Zero)
+                {
+                    // Inform user
+                    MessageBox.Show("Please select target window.", "Missing target", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Halt flow
+                    return;
+                }
+
+                // Key
+                if (this.keyComboBox.SelectedIndex > -1)
+                {
+                    // Change to SendKeys format
+                    if (this.keyComboBox.Text.Length > 1)
+                    {
+                        this.sendKeyString = this.sendKeyDictionary[this.keyComboBox.Text];
+                    }
+                    else
+                    {
+                        this.sendKeyString = this.keyComboBox.Text;
+                    }
+                }
+                else
+                {
+                    // Inform user
+                    MessageBox.Show("Please choose a valid key", "Invalid key", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    // Halt flow
+                    return;
+                }
+
+                /* Start timer */
+
+                // Try parse interval or set to initial 1000 value
+
+                sendKeyTimer.Elapsed += new ElapsedEventHandler(OnSendKeyTimerElapsed);
+                sendKeyTimer.Interval = Convert.ToUInt32(this.intervalComboBox.Text);
+                sendKeyTimer.Enabled = true;
+            }
+            else
+            {
+                // Stop
+                sendKeyTimer.Enabled = false;
+            }
+        }
+
+        /// <summary>
+        /// Handles the target list view selected index changed event.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OnTargetListViewSelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.targetHandle = (IntPtr)this.targetListView.SelectedItems[0].Tag;
+        }
+
+        /// <summary>
+        /// Handles the send key timer elapsed event.
+        /// </summary>
+        /// <param name="sender">Sender object.</param>
+        /// <param name="e">Event arguments.</param>
+        private void OnSendKeyTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            // TODO Make it the active window [Can be done via PostMessage i.e. for inactive windows]
+            SetForegroundWindow(this.targetHandle);
+
+            // Send the key
+            SendKeys.SendWait(this.sendKeyString);
         }
 
         /// <summary>
@@ -322,7 +485,7 @@ namespace KeyLoop
             this.settingsData.MinimizeOnLoopStart = this.minimizeOnLoopStartToolStripMenuItem.Checked;
             this.settingsData.Key = this.keyComboBox.Text;
             this.settingsData.Presses = this.pressesNumericUpDown.Value;
-            this.settingsData.Delay = this.delayComboBox.Text;
+            this.settingsData.Interval = this.intervalComboBox.Text;
 
             // Save settings data to disk
             this.SaveSettingsFile(this.settingsDataPath, this.settingsData);

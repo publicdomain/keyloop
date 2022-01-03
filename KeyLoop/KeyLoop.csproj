@@ -46,9 +46,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
     </Reference>
-    <Reference Include="PInvoke.User32">
-      <HintPath>Resources\PInvoke.User32.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutForm.cs" />
@@ -67,8 +64,6 @@
     <None Include="app.config" />
     <None Include="Resources\forever_gcb61a8d04_640_OnM_icon.ico" />
     <None Include="Resources\publicdomain.com_7-8-vista-xp.ico" />
-    <None Include="Resources\dotnet-pinvoke_LICENSE.txt" />
-    <None Include="Resources\PInvoke.User32.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />
