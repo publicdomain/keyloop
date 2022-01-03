@@ -284,8 +284,11 @@ namespace KeyLoop
             // TODO Make it the active window [Can be done via PostMessage i.e. for inactive windows]
             SetForegroundWindow(this.targetHandle);
 
-            // Send the key
-            SendKeys.SendWait(this.sendKeyString);
+            // Send the key x presses
+            for (int i = 0; i < this.pressesNumericUpDown.Value; i++)
+            {
+                SendKeys.SendWait(this.sendKeyString);
+            }
 
             // Raise & set cycle count
             this.cycles++;
