@@ -418,6 +418,9 @@ namespace KeyLoop
             this.cycleCountToolStripStatusLabel.Text = "0";
             this.sendKeyString = string.Empty;
             this.targetHandle = IntPtr.Zero;
+
+            // Remove previous settings file from disk
+            File.Delete(this.settingsDataPath);
         }
 
         /// <summary>
