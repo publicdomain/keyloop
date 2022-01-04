@@ -2,7 +2,7 @@
 
 Loops a key with configurable simulated presses and delay.
 
-![Release Image]()
+![Release Image](https://user-images.githubusercontent.com/54631779/148102705-04bdcc9c-07ef-4e21-a1ab-3839fbe0b25b.png)
 
 Made for **adamok70** from [donationcoder.com](https://www.donationcoder.com).
 

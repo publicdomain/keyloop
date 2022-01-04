@@ -264,6 +264,12 @@ namespace KeyLoop
 
                 // Start
                 this.sendKeyTimer.Start();
+
+                // Minimize on start
+                if (this.minimizeOnLoopStartToolStripMenuItem.Checked)
+                {
+                    this.WindowState = FormWindowState.Minimized;
+                }
             }
             else
             {
