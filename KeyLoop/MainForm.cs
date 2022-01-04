@@ -495,7 +495,7 @@ namespace KeyLoop
             var aboutForm = new AboutForm(
                 $"About {programTitle}",
                 $"{programTitle} {version.Major}.{version.Minor}.{version.Build}",
-                $"Made for: adamok70{Environment.NewLine}DonationCoder.com{Environment.NewLine}Day #003, Week #01 @ January 03, 2022",
+                $"Made for: adamok70{Environment.NewLine}DonationCoder.com{Environment.NewLine}Day #4, Week #01 @ January 04, 2022",
                 licenseText,
                 this.Icon.ToBitmap())
             {
