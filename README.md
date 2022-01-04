@@ -20,6 +20,7 @@ v0.1.0:
 * Refresh target windows.
 * Configurable key, number of presses and interval.
 * Remember settings.
+* Minimize on loop start.
 * Always on top.
 
 Day #4, Week #01 @ January 04, 2022
